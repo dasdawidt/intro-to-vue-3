@@ -39,6 +39,14 @@ app.component('product-display', {
           v-on:click="addToCart">
           Add to Cart
         </button>
+
+        <button 
+          class="button" 
+          v-on:click="removeFromCart"
+          style="width: auto"
+        >
+          Remove from Cart
+        </button>
       </div>
     </div>
   </div>`,
@@ -50,16 +58,19 @@ app.component('product-display', {
         details: ['50% cotton', '30% wool', '20% polyester'],
         variants: [
           { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
-          { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 },
+          { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 10 },
         ]
     }
   },
   methods: {
       addToCart() {
-          this.cart += 1
+        this.$emit('update-cart', true, this.variants[this.selectedVariant].id)
+      },
+      removeFromCart() {
+        this.$emit('update-cart', false, this.variants[this.selectedVariant].id)
       },
       updateVariant(index) {
-          this.selectedVariant = index
+        this.selectedVariant = index
       }
   },
   computed: {
